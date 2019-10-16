@@ -12,7 +12,7 @@ Com o objetivo de simplificar esse tipo de validação (seja em casos de teste o
 # Utilizando
 Para utilizar é bem simples. Primeiro importe no seu Gradle:
 
-`implementation("top.colman.simplecpfvalidator:simple-cpf-validator:{version}`
+`implementation("top.colman.simplecpfvalidator:simple-cpf-validator:{version}")`
 
 E utilize a função em qualquer String de seu código:
 
