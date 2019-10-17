@@ -1,3 +1,18 @@
+/*
+ * Copyright 2019 Leonardo Colman Lopes
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package top.colman.simplecpfvalidator
 
 /**
@@ -33,7 +48,7 @@ private fun String.isBlacklistedCpf() = this in blacklistedCpfs
 private fun String.hasValidVerificationDigits(): Boolean {
     val firstNineDigits = substring(0..8)
     val digits = substring(9..10)
-    
+
     return firstNineDigits.calculateDigits() == digits
 }
 
@@ -41,17 +56,17 @@ private fun String.calculateDigits(): String {
     val numbers = map { it.toString().toInt() }
     val firstDigit = numbers.calculateFirstVerificationDigit()
     val secondDigit = numbers.calculateSecondVerificationDigit(firstDigit)
-    
+
     return "$firstDigit$secondDigit"
 }
 
 private fun List<Int>.calculateFirstVerificationDigit(): Int {
     /* Given 9 CPF numbers, the first digit calculation works this way:
-    
+
     There is a weight associated to each number index:
     CPF first nine digits - | A  | B | C | D | E | F | G | H | I |
     CPF index multiplier  - | 10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 |
-  
+
     We will then sum all the digits with their multiplier: A * 10 + B * 9 + C * 8 ...
     With that result, the first verifier digit will be calculated with the remainder of (SUM / 11)
     If the remainder is 0 or 1, the digit is ZERO. If it's >=2, the digit is (11 - remainder)
@@ -59,7 +74,7 @@ private fun List<Int>.calculateFirstVerificationDigit(): Int {
     val firstNineDigits = this
     val weights = (10 downTo 2).toList()
     val sum = firstNineDigits.withIndex().sumBy { (index, element) -> weights[index] * element }
-    
+
     val remainder = sum % 11
     return if(remainder < 2) 0 else 11 - remainder
 }
@@ -67,22 +82,22 @@ private fun List<Int>.calculateFirstVerificationDigit(): Int {
 private fun List<Int>.calculateSecondVerificationDigit(firstDigit: Int): Int {
     /*
     In a similar way to calculating the first digit, the second digit also works with a table of weights and the numbers
-    
+
     However, the last digit is added to the digits
-    
+
     CPF first nine digits + first verification digit - | A  | B  | C | D | E | F | G | H | I | 1st v.d. |
     CPF Index multiplier                             - | 11 | 10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2        |
-    
+
     And in the same fashion, the sum will be calculated as A * 11 + B * 10 + ... + 1st vd * 2
     The second verification digit uses the same formula:
     remainder = (SUM / 11)
     2nd digit = ZERO if remainder is 0 or 1, 11 - remainder otherwise
      */
-    
+
     val firstTenDigits = this + firstDigit
     val weights = (11 downTo 2).toList()
     val sum = firstTenDigits.withIndex().sumBy { (index, element) -> weights[index] * element }
-    
+
     val remainder = sum % 11
     return if (remainder < 2) 0 else 11 - remainder
 }
