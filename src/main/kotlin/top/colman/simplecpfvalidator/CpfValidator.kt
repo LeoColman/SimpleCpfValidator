@@ -48,6 +48,8 @@ fun String.isCpf(charactersToIgnore: List<Char> = listOf('.', '-')): Boolean {
  * This function checks if a given Long is a CPF (Cadastro de Pessoa Fisica in Portuguese), which is the Brazilian
  * individual taxpayer registry identification.
  *
+ * If a negative value is used, the absolute (positive) will be considered instead.
+ *
  * The CPFs 111.111.111-11, 222.222.222-22, ..., 999.999.999-99 although numeric valid are considered invalid CPFs as
  * per the specification.
  *
