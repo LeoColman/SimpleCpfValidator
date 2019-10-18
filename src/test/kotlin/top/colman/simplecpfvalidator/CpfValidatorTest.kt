@@ -50,7 +50,6 @@ class CpfValidatorTest : FunSpec() {
             ValidCpfGenerator.map { "$it++" }.forNone { cpf -> cpf.isCpf(listOf('.', '-')) }
         }
 
-        //region CPF input as Long type
         test("Should return true on valid Long typed CPF input") {
             24865482385.isCpf().shouldBeTrue()
         }
@@ -62,7 +61,6 @@ class CpfValidatorTest : FunSpec() {
         test("Should return false on invalid length of Long typed CPF input") {
             999L.isCpf().shouldBeFalse()
         }
-        //endregion
     }
 
     private fun String.shouldBeCpf() = this.isCpf().shouldBeTrue()
