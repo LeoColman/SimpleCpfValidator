@@ -15,6 +15,8 @@
  */
 package top.colman.simplecpfvalidator
 
+import kotlin.math.abs
+
 /**
  * Verifies that this String is a CPF
  *
@@ -38,6 +40,11 @@ fun String.isCpf(charactersToIgnore: List<Char> = listOf('.', '-')): Boolean {
     val sanitizedCpf = this.filterNot { it in charactersToIgnore }
     if (sanitizedCpf.containsInvalidCPFChars() || sanitizedCpf.isInvalidCpfSize() || sanitizedCpf.isBlacklistedCpf()) return false
     return this.hasValidVerificationDigits()
+}
+
+fun Long.isCpf() : Boolean {
+    val absNumber = abs(this)
+    return absNumber.toString().isCpf()
 }
 
 private fun String.containsInvalidCPFChars() = this.any { !it.isDigit() }
