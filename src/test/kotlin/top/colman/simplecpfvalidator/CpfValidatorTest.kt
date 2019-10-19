@@ -16,6 +16,7 @@
 package top.colman.simplecpfvalidator
 
 import io.kotlintest.inspectors.forNone
+import io.kotlintest.matchers.boolean.shouldBeFalse
 import io.kotlintest.matchers.boolean.shouldBeTrue
 import io.kotlintest.properties.Gen
 import io.kotlintest.properties.forAll
@@ -47,6 +48,18 @@ class CpfValidatorTest : FunSpec() {
 
         test("Shouldn't sanitize unspecified characters") {
             ValidCpfGenerator.map { "$it++" }.forNone { cpf -> cpf.isCpf(listOf('.', '-')) }
+        }
+
+        test("Should return true on valid Long typed CPF input") {
+            24865482385.isCpf().shouldBeTrue()
+        }
+
+        test("Should return false on blacklisted Long typed CPF input") {
+            11111111111.isCpf().shouldBeFalse()
+        }
+
+        test("Should return false on invalid length of Long typed CPF input") {
+            999L.isCpf().shouldBeFalse()
         }
     }
 
