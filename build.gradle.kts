@@ -1,3 +1,4 @@
+import io.gitlab.arturbosch.detekt.detekt
 import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -6,6 +7,7 @@ plugins {
     `maven-publish`
     signing
     id("org.jetbrains.dokka") version "0.9.17"
+    id("io.gitlab.arturbosch.detekt").version("1.1.1")
     
 }
 
@@ -19,6 +21,10 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     testImplementation(group = "io.kotlintest", name = "kotlintest-runner-junit5", version = "3.4.2")
+}
+
+detekt {
+    input = files("src/main/kotlin", "src/test/kotlin")
 }
 
 tasks.withType<KotlinCompile> {
