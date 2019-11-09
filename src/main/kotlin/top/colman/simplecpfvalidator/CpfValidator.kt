@@ -37,8 +37,8 @@ import kotlin.math.abs
  * @see [http://normas.receita.fazenda.gov.br/sijut2consulta/link.action?visao=anotado&idAto=1893]
  */
 fun String.isCpf(charactersToIgnore: List<Char> = listOf('.', '-')): Boolean {
-    val sanitizedCpf = this.filterNot { it in charactersToIgnore }
-    if (sanitizedCpf.containsInvalidCPFChars() || sanitizedCpf.isInvalidCpfSize() || sanitizedCpf.isBlacklistedCpf()) return false
+    val cleanCpf = this.filterNot { it in charactersToIgnore }
+    if (cleanCpf.containsInvalidCPFChars() || cleanCpf.isInvalidCpfSize() || cleanCpf.isBlacklistedCpf()) return false
     return this.hasValidVerificationDigits()
 }
 
