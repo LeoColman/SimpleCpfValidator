@@ -1,7 +1,7 @@
 # Simple Cpf Validator
 
 
-[![Build Status](https://travis-ci.com/Kerooker/SimpleCpfValidator.svg?branch=master)](https://travis-ci.com/Kerooker/SimpleCpfValidator) [![GitHub](https://img.shields.io/github/license/Kerooker/SimpleCpfValidator.svg)](https://github.com/Kerooker/SimpleCpfValidator/blob/master/LICENSE) [![Maven Central](https://img.shields.io/maven-central/v/top.colman.simplecpfvalidator/simple-cpf-validator.svg)](https://search.maven.org/search?q=g:top.colman.simplecpfvalidator)
+[![Build Status](https://travis-ci.com/LeoColman/SimpleCpfValidator.svg?branch=master)](https://travis-ci.com/LeoColman/SimpleCpfValidator) [![GitHub](https://img.shields.io/github/license/LeoColman/SimpleCpfValidator.svg)](https://github.com/LeoColman/SimpleCpfValidator/blob/master/LICENSE) [![Maven Central](https://img.shields.io/maven-central/v/top.colman.simplecpfvalidator/simple-cpf-validator.svg)](https://search.maven.org/search?q=g:top.colman.simplecpfvalidator)
 
 
 O conceito de validação de CPF existe desde a criação do próprio documento. No entanto, observa-se que a validação deste documento é replicada em várias aplicações, em classes idênticas, copiadas e coladas.
