@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "top.colman.simplecpfvalidator"
-version = "1.0.0"
+version = System.getenv("RELEASE_VERSION") ?: "local"
 
 repositories {
     mavenCentral()
@@ -54,8 +54,8 @@ publishing {
         
         maven("https://oss.sonatype.org/service/local/staging/deploy/maven2") {
             credentials {
-                username = System.getProperty("OSSRH_USERNAME")
-                password = System.getProperty("OSSRH_PASSWORD")
+                username = System.getenv("OSSRH_USERNAME")
+                password = System.getenv("OSSRH_PASSWORD")
             }
         }
     }
@@ -98,7 +98,14 @@ publishing {
     }
 }
 
+val signingKey: String? by project
+val signingPassword: String? by project
+
 signing {
     useGpgCmd()
+    if(signingKey != null && signingPassword != null) {
+        useInMemoryPgpKeys(signingKey, signingPassword)
+    }
+
     sign(publishing.publications["mavenJava"])
 }
