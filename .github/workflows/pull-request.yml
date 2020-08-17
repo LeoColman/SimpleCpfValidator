@@ -1,0 +1,15 @@
+name: PullRequest
+
+on:
+  pull_request:
+    paths-ignore:
+      - '*.md'
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: check
+        run: ./gradlew check
