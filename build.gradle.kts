@@ -3,11 +3,11 @@ import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.3.50"
+    kotlin("jvm") version "1.4.0"
     `maven-publish`
     signing
-    id("org.jetbrains.dokka") version "0.9.17"
-    id("io.gitlab.arturbosch.detekt").version("1.1.1")
+    id("org.jetbrains.dokka") version "0.10.1"
+    id("io.gitlab.arturbosch.detekt").version("1.11.0")
     
 }
 
@@ -16,15 +16,12 @@ version = System.getenv("RELEASE_VERSION") ?: "local"
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     testImplementation(group = "io.kotlintest", name = "kotlintest-runner-junit5", version = "3.4.2")
-}
-
-detekt {
-    input = files("src/main/kotlin", "src/test/kotlin")
 }
 
 tasks.withType<KotlinCompile> {
@@ -36,7 +33,7 @@ tasks.withType<Test> {
 }
 
 val sourcesJar by tasks.registering(Jar::class) {
-    classifier = "sources"
+    archiveClassifier.set("sources")
     from(sourceSets.getByName("main").allSource)
 }
 
@@ -45,7 +42,7 @@ val javadocJar by tasks.registering(Jar::class) {
     javadoc.outputFormat = "javadoc"
     javadoc.outputDirectory = "$buildDir/javadoc"
     dependsOn(javadoc)
-    classifier = "javadoc"
+    archiveClassifier.set("javadoc")
     from(javadoc.outputDirectory)
 }
 
