@@ -15,12 +15,16 @@
  */
 package top.colman.simplecpfvalidator
 
-import io.kotlintest.properties.Gen
-import io.kotlintest.properties.generateInfiniteSequence
+import io.kotest.property.Arb
+import io.kotest.property.RandomSource
+import io.kotest.property.Sample
+import io.kotest.property.arbitrary.int
+import io.kotest.property.arbitrary.next
 
-object ValidCpfGenerator : Gen<String> {
 
-    override fun constants() = listOf(
+object ValidCpfGenerator : Arb<String>() {
+
+    override fun edgecases() = listOf(
         "10147788080",
         "98503877007",
         "57773940002",
@@ -30,13 +34,16 @@ object ValidCpfGenerator : Gen<String> {
 
     // https://pt.wikipedia.org/wiki/D%C3%ADgito_verificador
     // https://www.geradorcpf.com/algoritmo_do_cpf.htm
-    override fun random() = generateInfiniteSequence {
+    override fun values(rs: RandomSource) = generateSequence {
         val digits = List(9) { randomDigit() }
         val firstVerifierDigit = digits.firstVerifierDigit()
         val secondVerifierDigit = digits.secondVerifierDigit(firstVerifierDigit)
 
-        digits.joinToString(separator = "") + "$firstVerifierDigit" + "$secondVerifierDigit"
+        Sample(
+            digits.joinToString(separator = "") + "$firstVerifierDigit" + "$secondVerifierDigit"
+        )
     }
+
 
     private fun List<Int>.firstVerifierDigit(): Int {
         val weights = (10 downTo 2).toList()
@@ -59,4 +66,4 @@ object ValidCpfGenerator : Gen<String> {
     }
 }
 
-private fun randomDigit() = Gen.from("0123456789".toList()).next().toString().toInt()
+private fun randomDigit() = Arb.int(0, 9).next()

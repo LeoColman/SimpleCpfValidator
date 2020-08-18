@@ -15,56 +15,56 @@
  */
 package top.colman.simplecpfvalidator
 
-import io.kotlintest.inspectors.forNone
-import io.kotlintest.matchers.boolean.shouldBeFalse
-import io.kotlintest.matchers.boolean.shouldBeTrue
-import io.kotlintest.properties.Gen
-import io.kotlintest.properties.forAll
-import io.kotlintest.properties.forNone
-import io.kotlintest.specs.FunSpec
+import io.kotest.core.spec.style.FunSpec
+import io.kotest.inspectors.forNone
+import io.kotest.matchers.booleans.shouldBeFalse
+import io.kotest.matchers.booleans.shouldBeTrue
+import io.kotest.property.Arb
+import io.kotest.property.arbitrary.map
+import io.kotest.property.arbitrary.string
+import io.kotest.property.forAll
 
-class CpfValidatorTest : FunSpec() {
 
-    init {
-        test("Should return false on blacklisted CPFs") {
-            blacklistedCpfs.forNone { it.shouldBeCpf() }
-        }
-
-        test("Should return true on valid CPFs") {
-            ValidCpfGenerator.forAll { cpf -> cpf.isCpf() }
-        }
-
-        test("Should return false on random strings") {
-            Gen.string().forNone { cpf -> cpf.isCpf() }
-        }
-
-        test("Should return false on invalid but non-blacklisted CPF") {
-            knownInvalidCpfs.forNone { it.shouldBeCpf() }
-        }
-
-        test("Should sanitize the String given replaceable characters and still return true on valid cpfs") {
-            ValidCpfGenerator.map { "$it..--." }.forAll { cpf -> cpf.isCpf(listOf('.', '-')) }
-        }
-
-        test("Shouldn't sanitize unspecified characters") {
-            ValidCpfGenerator.map { "$it++" }.forNone { cpf -> cpf.isCpf(listOf('.', '-')) }
-        }
-
-        test("Should return true on valid Long typed CPF input") {
-            24865482385.isCpf().shouldBeTrue()
-        }
-
-        test("Should return false on blacklisted Long typed CPF input") {
-            11111111111.isCpf().shouldBeFalse()
-        }
-
-        test("Should return false on invalid length of Long typed CPF input") {
-            999L.isCpf().shouldBeFalse()
-        }
+class CpfValidatorTest : FunSpec({
+    test("Should return false on blacklisted CPFs") {
+        blacklistedCpfs.forNone { it.shouldBeCpf() }
     }
 
-    private fun String.shouldBeCpf() = this.isCpf().shouldBeTrue()
-}
+    test("Should return true on valid CPFs") {
+        ValidCpfGenerator.forAll { cpf -> cpf.isCpf() }
+    }
+
+    test("Should return false on random strings") {
+        Arb.string().forAll { cpf -> !cpf.isCpf() }
+    }
+
+    test("Should return false on invalid but non-blacklisted CPF") {
+        knownInvalidCpfs.forNone { it.shouldBeCpf() }
+    }
+
+    test("Should sanitize the String given replaceable characters and still return true on valid cpfs") {
+        ValidCpfGenerator.map { "$it..--." }.forAll { cpf -> cpf.isCpf(listOf('.', '-')) }
+    }
+
+    test("Shouldn't sanitize unspecified characters") {
+        ValidCpfGenerator.map { "$it++" }.forAll { cpf -> !cpf.isCpf(listOf('.', '-')) }
+    }
+
+    test("Should return true on valid Long typed CPF input") {
+        24865482385.isCpf().shouldBeTrue()
+    }
+
+    test("Should return false on blacklisted Long typed CPF input") {
+        11111111111.isCpf().shouldBeFalse()
+    }
+
+    test("Should return false on invalid length of Long typed CPF input") {
+        999L.isCpf().shouldBeFalse()
+    }
+})
+
+private fun String.shouldBeCpf() = this.isCpf().shouldBeTrue()
+
 
 private val blacklistedCpfs = listOf(
     "00000000000",
