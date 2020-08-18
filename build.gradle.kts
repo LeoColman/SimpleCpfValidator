@@ -21,7 +21,8 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-    testImplementation(group = "io.kotlintest", name = "kotlintest-runner-junit5", version = "3.4.2")
+    testImplementation(group = "io.kotest", name = "kotest-runner-junit5-jvm", version = "4.2.0.RC2")
+    testImplementation(group = "io.kotest", name = "kotest-property-jvm", version = "4.2.0.RC2")
 }
 
 tasks.withType<KotlinCompile> {
