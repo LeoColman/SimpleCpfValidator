@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package top.colman.simplecpfvalidator
+package br.com.colman.simplecpfvalidator
 
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.inspectors.forNone

@@ -1,9 +1,10 @@
-name: PullRequest
+name: Build
 
 on:
   pull_request:
     paths-ignore:
       - '*.md'
+  push:
 
 jobs:
   check:

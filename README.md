@@ -1,7 +1,7 @@
 # Simple Cpf Validator
 
-
-[![Build Status](https://travis-ci.com/LeoColman/SimpleCpfValidator.svg?branch=master)](https://travis-ci.com/LeoColman/SimpleCpfValidator) [![GitHub](https://img.shields.io/github/license/LeoColman/SimpleCpfValidator.svg)](https://github.com/LeoColman/SimpleCpfValidator/blob/master/LICENSE) [![Maven Central](https://img.shields.io/maven-central/v/top.colman.simplecpfvalidator/simple-cpf-validator.svg)](https://search.maven.org/search?q=g:top.colman.simplecpfvalidator)
+![Build](https://github.com/LeoColman/SimpleCpfValidator/workflows/Build/badge.svg)
+[![GitHub](https://img.shields.io/github/license/LeoColman/SimpleCpfValidator.svg)](https://github.com/LeoColman/SimpleCpfValidator/blob/master/LICENSE) [![Maven Central](https://img.shields.io/maven-central/v/br.com.colman.simplecpfvalidator/simple-cpf-validator.svg)](https://search.maven.org/search?q=g:br.com.colman.simplecpfvalidator)
 
 
 O conceito de validação de CPF existe desde a criação do próprio documento. No entanto, observa-se que a validação deste documento é replicada em várias aplicações, em classes idênticas, copiadas e coladas.
@@ -12,7 +12,7 @@ Com o objetivo de simplificar esse tipo de validação (seja em casos de teste o
 # Utilizando
 Para utilizar é bem simples. Primeiro importe no seu Gradle:
 
-`implementation("top.colman.simplecpfvalidator:simple-cpf-validator:{version}")`
+`implementation("br.com.colman.simplecpfvalidator:simple-cpf-validator:{version}")`
 
 E utilize a função em qualquer String de seu código:
 

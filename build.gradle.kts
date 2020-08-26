@@ -1,4 +1,3 @@
-import io.gitlab.arturbosch.detekt.detekt
 import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -11,7 +10,7 @@ plugins {
     
 }
 
-group = "top.colman.simplecpfvalidator"
+group = "br.com.colman.simplecpfvalidator"
 version = System.getenv("RELEASE_VERSION") ?: "local"
 
 repositories {
@@ -20,9 +19,8 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
-    testImplementation(group = "io.kotest", name = "kotest-runner-junit5-jvm", version = "4.2.0.RC2")
-    testImplementation(group = "io.kotest", name = "kotest-property-jvm", version = "4.2.0.RC2")
+    testImplementation(group = "io.kotest", name = "kotest-runner-junit5-jvm", version = "4.2.0")
+    testImplementation(group = "io.kotest", name = "kotest-property-jvm", version = "4.2.0")
 }
 
 tasks.withType<KotlinCompile> {
@@ -68,13 +66,13 @@ publishing {
             pom {
                 name.set("SimpleCpfValidator")
                 description.set("Simple CPF Validator")
-                url.set("https://www.github.com/Kerooker/SimpleCpfValidator")
+                url.set("https://www.github.com/LeoColman/SimpleCpfValidator")
                 
                 
                 scm {
-                    connection.set("scm:git:http://www.github.com/Kerooker/SimpleCpfValidator/")
-                    developerConnection.set("scm:git:http://github.com/Kerooker/")
-                    url.set("https://www.github.com/Kerooker/SimpleCpfValidator")
+                    connection.set("scm:git:http://www.github.com/LeoColman/SimpleCpfValidator/")
+                    developerConnection.set("scm:git:http://github.com/LeoColman/")
+                    url.set("https://www.github.com/LeoColman/SimpleCpfValidator")
                 }
                 
                 licenses {
@@ -86,9 +84,9 @@ publishing {
                 
                 developers {
                     developer {
-                        id.set("Kerooker")
+                        id.set("LeoColman")
                         name.set("Leonardo Colman Lopes")
-                        email.set("leonardo@colman.top")
+                        email.set("leonardo.dev@colman.com.br")
                     }
                 }
             }
