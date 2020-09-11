@@ -39,7 +39,7 @@ import kotlin.math.abs
 fun String.isCpf(charactersToIgnore: List<Char> = listOf('.', '-')): Boolean {
     val cleanCpf = this.filterNot { it in charactersToIgnore }
     if (cleanCpf.containsInvalidCPFChars() || cleanCpf.isInvalidCpfSize() || cleanCpf.isBlacklistedCpf()) return false
-    return this.hasValidVerificationDigits()
+    return cleanCpf.hasValidVerificationDigits()
 }
 
 /**
