@@ -43,7 +43,7 @@ class CpfValidatorTest : FunSpec({
     }
 
     test("Should sanitize the String given replaceable characters and still return true on valid cpfs") {
-        ValidCpfGenerator.map { "$it..--." }.forAll { cpf -> cpf.isCpf(listOf('.', '-')) }
+        ValidCpfGenerator.map { "..--.$it..--." }.forAll { cpf -> cpf.isCpf(listOf('.', '-')) }
     }
 
     test("Shouldn't sanitize unspecified characters") {
