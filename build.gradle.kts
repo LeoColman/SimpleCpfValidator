@@ -1,3 +1,4 @@
+import info.solidsoft.gradle.pitest.PitestPluginExtension
 import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -7,7 +8,7 @@ plugins {
     signing
     id("org.jetbrains.dokka") version "0.10.1"
     id("io.gitlab.arturbosch.detekt").version("1.11.0")
-    
+    id("info.solidsoft.pitest").version("1.5.1")
 }
 
 group = "br.com.colman.simplecpfvalidator"
@@ -19,8 +20,9 @@ repositories {
 }
 
 dependencies {
-    testImplementation(group = "io.kotest", name = "kotest-runner-junit5-jvm", version = "4.2.0")
-    testImplementation(group = "io.kotest", name = "kotest-property-jvm", version = "4.2.0")
+    testImplementation("io.kotest:kotest-runner-junit5-jvm:4.6.1")
+    testImplementation("io.kotest:kotest-property-jvm:4.6.1")
+    testImplementation("io.kotest.extensions:kotest-extensions-pitest:1.0.1")
 }
 
 tasks.withType<KotlinCompile> {
@@ -29,6 +31,11 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+configure<PitestPluginExtension> {
+    testPlugin.set("Kotest")
+    targetClasses.set(listOf("br.com.colman.simplecpfvalidator.*"))
 }
 
 val sourcesJar by tasks.registering(Jar::class) {
@@ -47,7 +54,7 @@ val javadocJar by tasks.registering(Jar::class) {
 
 publishing {
     repositories {
-        
+
         maven("https://oss.sonatype.org/service/local/staging/deploy/maven2") {
             credentials {
                 username = System.getenv("OSSRH_USERNAME")
@@ -55,33 +62,33 @@ publishing {
             }
         }
     }
-    
+
     publications {
-        
+
         register("mavenJava", MavenPublication::class) {
             from(components["java"])
             artifact(sourcesJar.get())
             artifact(javadocJar.get())
-            
+
             pom {
                 name.set("SimpleCpfValidator")
                 description.set("Simple CPF Validator")
                 url.set("https://www.github.com/LeoColman/SimpleCpfValidator")
-                
-                
+
+
                 scm {
                     connection.set("scm:git:http://www.github.com/LeoColman/SimpleCpfValidator/")
                     developerConnection.set("scm:git:http://github.com/LeoColman/")
                     url.set("https://www.github.com/LeoColman/SimpleCpfValidator")
                 }
-                
+
                 licenses {
                     license {
                         name.set("The Apache 2.0 License")
                         url.set("https://opensource.org/licenses/Apache-2.0")
                     }
                 }
-                
+
                 developers {
                     developer {
                         id.set("LeoColman")
