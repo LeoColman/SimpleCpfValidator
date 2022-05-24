@@ -5,7 +5,7 @@ plugins {
   kotlin("jvm") version "1.6.20"
   `maven-publish`
   signing
-  id("org.jetbrains.dokka") version "0.10.1"
+  id("org.jetbrains.dokka") version "1.6.21"
   id("io.gitlab.arturbosch.detekt") version "1.20.0"
 }
 
@@ -35,12 +35,9 @@ val sourcesJar by tasks.registering(Jar::class) {
 }
 
 val javadocJar by tasks.registering(Jar::class) {
-  val javadoc = tasks["dokka"] as DokkaTask
-  javadoc.outputFormat = "javadoc"
-  javadoc.outputDirectory = "$buildDir/javadoc"
-  dependsOn(javadoc)
+  dependsOn("dokkaHtml")
   archiveClassifier.set("javadoc")
-  from(javadoc.outputDirectory)
+  from("$buildDir/dokka")
 }
 
 publishing {
