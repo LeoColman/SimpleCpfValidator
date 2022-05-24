@@ -20,7 +20,7 @@ repositories {
 
 dependencies {
     testImplementation(group = "io.kotest", name = "kotest-runner-junit5-jvm", version = "4.2.0")
-    testImplementation(group = "io.kotest", name = "kotest-property-jvm", version = "4.2.0")
+    testImplementation(group = "io.kotest", name = "kotest-property-jvm", version = "5.3.0")
 }
 
 tasks.withType<KotlinCompile> {
