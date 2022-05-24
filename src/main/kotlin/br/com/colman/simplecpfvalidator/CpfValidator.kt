@@ -97,7 +97,7 @@ private fun List<Int>.calculateFirstVerificationDigit(): Int {
      */
     val firstNineDigits = this
     val weights = (10 downTo 2).toList()
-    val sum = firstNineDigits.withIndex().sumBy { (index, element) -> weights[index] * element }
+    val sum = firstNineDigits.withIndex().sumOf { (index, element) -> weights[index] * element }
 
     val remainder = sum % 11
     return if(remainder < 2) 0 else 11 - remainder
@@ -120,7 +120,7 @@ private fun List<Int>.calculateSecondVerificationDigit(firstDigit: Int): Int {
 
     val firstTenDigits = this + firstDigit
     val weights = (11 downTo 2).toList()
-    val sum = firstTenDigits.withIndex().sumBy { (index, element) -> weights[index] * element }
+    val sum = firstTenDigits.withIndex().sumOf { (index, element) -> weights[index] * element }
 
     val remainder = sum % 11
     return if (remainder < 2) 0 else 11 - remainder
