@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@file:Suppress("MagicNumber")
 package br.com.colman.simplecpfvalidator
 
 import kotlin.math.abs
