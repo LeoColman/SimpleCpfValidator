@@ -5,7 +5,7 @@ plugins {
   `maven-publish`
   signing
   id("org.jetbrains.dokka") version "1.7.20"
-  id("io.gitlab.arturbosch.detekt") version "1.21.0"
+  id("io.gitlab.arturbosch.detekt") version "1.22.0"
 }
 
 group = "br.com.colman.simplecpfvalidator"
