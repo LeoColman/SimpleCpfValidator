@@ -83,7 +83,7 @@ publishing {
           developer {
             id.set("LeoColman")
             name.set("Leonardo Colman Lopes")
-            email.set("leonardo.dev@colman.com.br")
+            email.set("dev@leonardo.colman.com.br")
           }
         }
       }
