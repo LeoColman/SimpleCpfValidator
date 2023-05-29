@@ -3,6 +3,7 @@
 ![Build](https://github.com/LeoColman/SimpleCpfValidator/workflows/Build/badge.svg)
 [![GitHub](https://img.shields.io/github/license/LeoColman/SimpleCpfValidator.svg)](https://github.com/LeoColman/SimpleCpfValidator/blob/master/LICENSE) [![Maven Central](https://img.shields.io/maven-central/v/br.com.colman.simplecpfvalidator/simple-cpf-validator.svg)](https://search.maven.org/search?q=g:br.com.colman.simplecpfvalidator)
 [![Awesome Kotlin Badge](https://kotlin.link/awesome-kotlin.svg)](https://github.com/KotlinBy/awesome-kotlin/tree/readme#validation-back-)
+[![Zero Dependencies Badge](https://img.shields.io/badge/Dependencies-0-brightgreen)](build.gradle.kts)
 
 
 O conceito de validação de CPF existe desde a criação do próprio documento. No entanto, observa-se que a validação deste documento é replicada em várias aplicações, em classes idênticas, copiadas e coladas.
