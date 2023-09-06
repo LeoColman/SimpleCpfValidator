@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-  val kotestVersion = "5.6.2"
+  val kotestVersion = "5.7.2"
   testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
   testImplementation("io.kotest:kotest-property:$kotestVersion")
 }
