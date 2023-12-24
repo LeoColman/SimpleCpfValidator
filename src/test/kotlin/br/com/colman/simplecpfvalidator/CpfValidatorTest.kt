@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Leonardo Colman Lopes
+ * Copyright 2024 Leonardo Colman Lopes
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,8 +26,8 @@ import io.kotest.property.forAll
 
 
 class CpfValidatorTest : FunSpec({
-  test("Should return false on blacklisted CPFs") {
-    blacklistedCpfs.forNone { it.shouldBeCpf() }
+  test("Should return false on invalid CPFs") {
+    invalidCpfs.forNone { it.shouldBeCpf() }
   }
 
   test("Should return true on valid CPFs") {
@@ -38,11 +38,11 @@ class CpfValidatorTest : FunSpec({
     Arb.string().forAll { cpf -> !cpf.isCpf() }
   }
 
-  test("Should return false on invalid but non-blacklisted CPF") {
+  test("Should return false on unknown invalid CPFs") {
     knownInvalidCpfs.forNone { it.shouldBeCpf() }
   }
 
-  test("Should sanitize the String given replaceable characters and still return true on valid cpfs") {
+  test("Should sanitize the String given replaceable characters and still return true on valid CPFs") {
     ValidCpfGenerator.map { "..--.$it..--." }.forAll { cpf -> cpf.isCpf(listOf('.', '-')) }
   }
 
@@ -54,7 +54,7 @@ class CpfValidatorTest : FunSpec({
     24865482385.isCpf().shouldBeTrue()
   }
 
-  test("Should return false on blacklisted Long typed CPF input") {
+  test("Should return false on invalid Long typed CPF input") {
     11111111111.isCpf().shouldBeFalse()
   }
 
@@ -66,7 +66,7 @@ class CpfValidatorTest : FunSpec({
 private fun String.shouldBeCpf() = this.isCpf().shouldBeTrue()
 
 
-private val blacklistedCpfs = listOf(
+private val invalidCpfs = listOf(
   "00000000000",
   "11111111111",
   "22222222222",

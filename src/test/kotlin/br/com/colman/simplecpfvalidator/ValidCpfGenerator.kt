@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Leonardo Colman Lopes
+ * Copyright 2024 Leonardo Colman Lopes
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
