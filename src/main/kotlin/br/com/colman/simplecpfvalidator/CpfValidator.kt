@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Leonardo Colman Lopes
+ * Copyright 2024 Leonardo Colman Lopes
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 @file:Suppress("MagicNumber")
+
 package br.com.colman.simplecpfvalidator
 
 import kotlin.math.abs
@@ -39,7 +40,7 @@ import kotlin.math.abs
  */
 fun String.isCpf(charactersToIgnore: List<Char> = listOf('.', '-')): Boolean {
     val cleanCpf = this.filterNot { it in charactersToIgnore }
-    if (cleanCpf.containsInvalidCPFChars() || cleanCpf.isInvalidCpfSize() || cleanCpf.isBlacklistedCpf()) return false
+    if (cleanCpf.containsInvalidCPFChars() || cleanCpf.isInvalidCpfSize() || cleanCpf.isInvalidCpf()) return false
     return cleanCpf.hasValidVerificationDigits()
 }
 
@@ -60,14 +61,14 @@ fun String.isCpf(charactersToIgnore: List<Char> = listOf('.', '-')): Boolean {
  * @see [https://pt.wikipedia.org/wiki/Cadastro_de_pessoas_f%C3%ADsicas]
  * @see [http://normas.receita.fazenda.gov.br/sijut2consulta/link.action?visao=anotado&idAto=1893]
  */
-fun Long.isCpf() : Boolean {
+fun Long.isCpf(): Boolean {
     val absNumber = abs(this)
     return absNumber.toString().isCpf()
 }
 
 private fun String.containsInvalidCPFChars() = this.any { !it.isDigit() }
 private fun String.isInvalidCpfSize() = this.length != 11
-private fun String.isBlacklistedCpf() = this in blacklistedCpfs
+private fun String.isInvalidCpf() = this in invalidCpfs
 
 // Algorithm from https://www.somatematica.com.br/faq/cpf.php
 private fun String.hasValidVerificationDigits(): Boolean {
@@ -101,7 +102,7 @@ private fun List<Int>.calculateFirstVerificationDigit(): Int {
     val sum = firstNineDigits.withIndex().sumOf { (index, element) -> weights[index] * element }
 
     val remainder = sum % 11
-    return if(remainder < 2) 0 else 11 - remainder
+    return if (remainder < 2) 0 else 11 - remainder
 }
 
 private fun List<Int>.calculateSecondVerificationDigit(firstDigit: Int): Int {
@@ -127,7 +128,11 @@ private fun List<Int>.calculateSecondVerificationDigit(firstDigit: Int): Int {
     return if (remainder < 2) 0 else 11 - remainder
 }
 
-private val blacklistedCpfs = listOf(
+/**
+ * These CPFs although are numerically valid (i.e. [hasValidVerificationDigits] are considered invalid as per CPF
+ * specification
+ */
+private val invalidCpfs = listOf(
     "00000000000",
     "11111111111",
     "22222222222",
