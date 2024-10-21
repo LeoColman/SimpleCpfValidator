@@ -1,0 +1,48 @@
+# This file was generated using Kotlin DSL (.github/workflows/release.main.kts).
+# If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+# Generated with https://github.com/typesafegithub/github-workflows-kt
+
+name: 'Release'
+on:
+  push:
+    tags:
+    - '*'
+jobs:
+  check_yaml_consistency:
+    name: 'Check YAML consistency'
+    runs-on: 'ubuntu-latest'
+    steps:
+    - id: 'step-0'
+      name: 'Check out'
+      uses: 'actions/checkout@v4'
+    - id: 'step-1'
+      name: 'Execute script'
+      run: 'rm ''.github/workflows/release.yaml'' && ''.github/workflows/release.main.kts'''
+    - id: 'step-2'
+      name: 'Consistency check'
+      run: 'git diff --exit-code ''.github/workflows/release.yaml'''
+  deploy:
+    runs-on: 'macos-latest'
+    needs:
+    - 'check_yaml_consistency'
+    steps:
+    - id: 'step-0'
+      name: 'Set up JDK'
+      uses: 'actions/setup-java@v4'
+      with:
+        java-version: '23'
+        distribution: 'adopt'
+    - id: 'step-1'
+      name: 'Checkout'
+      uses: 'actions/checkout@v4'
+    - id: 'step-2'
+      name: 'Publish to Maven Central'
+      uses: 'gradle/gradle-build-action@v3'
+      with:
+        arguments: 'publish'
+      env:
+        RELEASE_VERSION: '${{ github.GITHUB_REF_NAME }}'
+        ORG_GRADLE_PROJECT_mavenCentralUsername: '${{ secrets.OSSRH_USERNAME }}'
+        ORG_GRADLE_PROJECT_mavenCentralPassword: '${{ secrets.OSSRH_PASSWORD }}'
+        ORG_GRADLE_PROJECT_signingInMemoryKey: '${{ secrets.SIGNING_KEY }}'
+        ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: '${{ secrets.SIGNING_PASSWORD }}'

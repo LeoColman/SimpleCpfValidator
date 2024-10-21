@@ -1,4 +1,5 @@
 import com.vanniktech.maven.publish.SonatypeHost
+import io.gitlab.arturbosch.detekt.Detekt
 
 plugins {
   kotlin("multiplatform") version "2.0.21"
@@ -37,10 +38,8 @@ kotlin {
   sourceSets {
     val jvmTest by getting {
       dependencies {
-        val kotestVersion = "5.9.1"
-
-        implementation("io.kotest:kotest-runner-junit5:$kotestVersion")
-        implementation("io.kotest:kotest-property:$kotestVersion")
+        implementation("io.kotest:kotest-runner-junit5:5.9.1")
+        implementation("io.kotest:kotest-property:5.9.1")
       }
     }
   }
@@ -51,7 +50,7 @@ tasks.withType<Test> {
 }
 
 mavenPublishing {
-  publishToMavenCentral(SonatypeHost.DEFAULT)
+  publishToMavenCentral(SonatypeHost.DEFAULT, automaticRelease = true)
   signAllPublications()
 
   pom {
@@ -81,4 +80,8 @@ mavenPublishing {
       }
     }
   }
+}
+
+tasks.register("detektAll") {
+  dependsOn(tasks.withType<Detekt>())
 }
