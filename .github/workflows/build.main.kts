@@ -23,7 +23,7 @@ workflow(
   sourceFile = __FILE__
 ) {
   job(id = "build", runsOn = RunnerType.UbuntuLatest) {
-    uses(name = "Set up JDK", action = SetupJava(javaVersion = "23", distribution = SetupJava.Distribution.Adopt))
+    uses(name = "Set up JDK", action = SetupJava(javaVersion = "22", distribution = SetupJava.Distribution.Adopt))
     uses(name = "Checkout", action = Checkout())
     uses(name = "Run Build", action = GradleBuildAction(arguments = "build"))
   }

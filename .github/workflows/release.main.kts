@@ -32,7 +32,7 @@ workflow(
 ) {
   job(id = "deploy", runsOn = RunnerType.MacOSLatest) {
 
-    uses(name = "Set up JDK", action = SetupJava(javaVersion = "23", distribution = SetupJava.Distribution.Adopt))
+    uses(name = "Set up JDK", action = SetupJava(javaVersion = "22", distribution = SetupJava.Distribution.Adopt))
     uses(name = "Checkout", action = Checkout())
     uses(name = "Publish to Maven Central", action = GradleBuildAction(arguments = "publish"), env = linkedMapOf(
       "RELEASE_VERSION" to expr { GITHUB_REF_NAME },
