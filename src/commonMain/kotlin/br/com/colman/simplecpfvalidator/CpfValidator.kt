@@ -129,7 +129,7 @@ private fun List<Int>.calculateSecondVerificationDigit(firstDigit: Int): Int {
 }
 
 /**
- * These CPFs although are numerically valid (i.e. [hasValidVerificationDigits] are considered invalid as per CPF
+ * These CPFs although are numerically valid (i.e. [hasValidVerificationDigits]) are considered invalid as per CPF
  * specification
  */
 private val invalidCpfs = listOf(
