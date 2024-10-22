@@ -16,54 +16,57 @@
 package br.com.colman.simplecpfvalidator
 
 import io.kotest.core.spec.style.FunSpec
-import io.kotest.inspectors.forNone
+import io.kotest.inspectors.forAll
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.map
 import io.kotest.property.arbitrary.string
-import io.kotest.property.forAll
+import io.kotest.property.checkAll
 
 
 class CpfValidatorTest : FunSpec({
   test("Should return false on invalid CPFs") {
-    invalidCpfs.forNone { it.shouldBeCpf() }
+    invalidCpfs.forAll { it.shouldNotBeCpf() }
   }
 
   test("Should return true on valid CPFs") {
-    ValidCpfGenerator.forAll { cpf -> cpf.isCpf() }
+    ValidCpfGenerator.checkAll { it.shouldBeCpf() }
   }
 
   test("Should return false on random strings") {
-    Arb.string().forAll { cpf -> !cpf.isCpf() }
+    Arb.string().checkAll { it.shouldNotBeCpf() }
   }
 
-  test("Should return false on unknown invalid CPFs") {
-    knownInvalidCpfs.forNone { it.shouldBeCpf() }
+  test("Should return false on known invalid CPFs") {
+    knownInvalidCpfs.forAll { it.shouldNotBeCpf() }
   }
 
   test("Should sanitize the String given replaceable characters and still return true on valid CPFs") {
-    ValidCpfGenerator.map { "..--.$it..--." }.forAll { cpf -> cpf.isCpf(listOf('.', '-')) }
+    ValidCpfGenerator.map { "..--.$it..--." }.checkAll { it.shouldBeCpf() }
   }
 
   test("Shouldn't sanitize unspecified characters") {
-    ValidCpfGenerator.map { "$it++" }.forAll { cpf -> !cpf.isCpf(listOf('.', '-')) }
+    ValidCpfGenerator.map { "$it++" }.checkAll { it.shouldNotBeCpf() }
   }
 
   test("Should return true on valid Long typed CPF input") {
-    24865482385.isCpf().shouldBeTrue()
+    24865482385.shouldBeCpf()
   }
 
   test("Should return false on invalid Long typed CPF input") {
-    11111111111.isCpf().shouldBeFalse()
+    11111111111.shouldNotBeCpf()
   }
 
   test("Should return false on invalid length of Long typed CPF input") {
-    999L.isCpf().shouldBeFalse()
+    999L.shouldNotBeCpf()
   }
 })
 
-private fun String.shouldBeCpf() = this.isCpf().shouldBeTrue()
+private fun String.shouldBeCpf() { this.isCpf().shouldBeTrue() }
+private fun String.shouldNotBeCpf() { this.isCpf().shouldBeFalse() }
+private fun Long.shouldBeCpf() { this.isCpf().shouldBeTrue() }
+private fun Long.shouldNotBeCpf() { this.isCpf().shouldBeFalse() }
 
 
 private val invalidCpfs = listOf(
