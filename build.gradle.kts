@@ -2,7 +2,7 @@ import com.vanniktech.maven.publish.SonatypeHost
 import io.gitlab.arturbosch.detekt.Detekt
 
 plugins {
-  kotlin("multiplatform") version "2.1.0"
+  kotlin("multiplatform") version "2.1.10"
   id("com.vanniktech.maven.publish") version "0.30.0"
   signing
   id("org.jetbrains.dokka") version "1.9.20"
