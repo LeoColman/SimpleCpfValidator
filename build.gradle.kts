@@ -5,7 +5,7 @@ plugins {
   kotlin("multiplatform") version "2.1.10"
   id("com.vanniktech.maven.publish") version "0.30.0"
   signing
-  id("org.jetbrains.dokka") version "1.9.20"
+  id("org.jetbrains.dokka") version "2.0.0"
   id("io.gitlab.arturbosch.detekt") version "1.23.7"
 }
 
