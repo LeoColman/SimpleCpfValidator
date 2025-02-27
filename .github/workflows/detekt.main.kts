@@ -26,6 +26,7 @@ workflow(
     uses(name = "Setup JDK", action = SetupJava(javaVersion = "22", distribution = SetupJava.Distribution.Adopt))
     uses(name = "Checkout", action = Checkout())
     uses(name = "Setup Gradle", action = ActionsSetupGradle())
+
     run(name = "Run Detekt", command = "./gradlew detektAll")
   }
 }
