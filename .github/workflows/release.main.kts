@@ -20,7 +20,7 @@ val OSSRH_USERNAME by Contexts.secrets
 val OSSRH_PASSWORD by Contexts.secrets
 val SIGNING_KEY by Contexts.secrets
 val SIGNING_PASSWORD by Contexts.secrets
-val GITHUB_REF_NAME by Contexts.github
+val REF_NAME by Contexts.github
 
 
 workflow(
@@ -37,7 +37,7 @@ workflow(
       name = "Publish to Maven Central",
       command = "./gradlew publish",
       env = linkedMapOf(
-        "RELEASE_VERSION" to expr { GITHUB_REF_NAME },
+        "RELEASE_VERSION" to expr { REF_NAME },
         "ORG_GRADLE_PROJECT_mavenCentralUsername" to expr { OSSRH_USERNAME },
         "ORG_GRADLE_PROJECT_mavenCentralPassword" to expr { OSSRH_PASSWORD },
         "ORG_GRADLE_PROJECT_signingInMemoryKey" to expr { SIGNING_KEY },
