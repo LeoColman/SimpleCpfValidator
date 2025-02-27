@@ -21,13 +21,13 @@ jobs:
     - id: 'step-2'
       name: 'Consistency check'
       run: 'git diff --exit-code ''.github/workflows/release.yaml'''
-  deploy:
+  release:
     runs-on: 'macos-latest'
     needs:
     - 'check_yaml_consistency'
     steps:
     - id: 'step-0'
-      name: 'Set up JDK'
+      name: 'Setup JDK'
       uses: 'actions/setup-java@v4'
       with:
         java-version: '22'
@@ -36,13 +36,14 @@ jobs:
       name: 'Checkout'
       uses: 'actions/checkout@v4'
     - id: 'step-2'
+      name: 'Setup Gradle'
+      uses: 'gradle/actions/setup-gradle@v4'
+    - id: 'step-3'
       name: 'Publish to Maven Central'
-      uses: 'gradle/gradle-build-action@v3'
-      with:
-        arguments: 'publish'
       env:
         RELEASE_VERSION: '${{ github.GITHUB_REF_NAME }}'
         ORG_GRADLE_PROJECT_mavenCentralUsername: '${{ secrets.OSSRH_USERNAME }}'
         ORG_GRADLE_PROJECT_mavenCentralPassword: '${{ secrets.OSSRH_PASSWORD }}'
         ORG_GRADLE_PROJECT_signingInMemoryKey: '${{ secrets.SIGNING_KEY }}'
         ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: '${{ secrets.SIGNING_PASSWORD }}'
+      run: './gradlew publish'
