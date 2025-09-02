@@ -1,4 +1,3 @@
-import com.vanniktech.maven.publish.SonatypeHost
 import io.gitlab.arturbosch.detekt.Detekt
 
 plugins {
@@ -38,7 +37,7 @@ kotlin {
   sourceSets {
     val jvmTest by getting {
       dependencies {
-        implementation("io.kotest:kotest-runner-junit5:5.9.1")
+        implementation("io.kotest:kotest-runner-junit5:6.0.1")
         implementation("io.kotest:kotest-property:6.0.1")
       }
     }
@@ -50,7 +49,7 @@ tasks.withType<Test> {
 }
 
 mavenPublishing {
-  publishToMavenCentral(SonatypeHost.DEFAULT, automaticRelease = true)
+  publishToMavenCentral(automaticRelease = true)
   signAllPublications()
 
   pom {
