@@ -37,7 +37,7 @@ kotlin {
   sourceSets {
     val jvmTest by getting {
       dependencies {
-        implementation("io.kotest:kotest-runner-junit5:6.0.2")
+        implementation("io.kotest:kotest-runner-junit5:6.0.3")
         implementation("io.kotest:kotest-property:6.0.3")
       }
     }
